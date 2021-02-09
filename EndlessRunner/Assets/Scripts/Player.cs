@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     [Header("Movement")]
     public float m_MovementInput; //the raw movement input
+    [Range(0f, 10f)]
+    public float m_VelocityDecrease = 5.0f; //the decrease value used to decrease the velocity
     public float m_MovementForce = 10.0f; //the movement force of the player
     public float m_JumpForce = 8.0f; //the jump force of the player
     public Transform jumpCheckA; //point A for the ground check collider
@@ -27,7 +29,7 @@ public class Player : MonoBehaviour
 
         //decrease the velocity if you are going the other way.
         if (m_MovementInput < 0 && rb2D.velocity.x > 0 || m_MovementInput > 0 && rb2D.velocity.x < 0)
-            rb2D.velocity += -rb2D.velocity / 2;
+            rb2D.velocity += new Vector2(-(rb2D.velocity.x / m_VelocityDecrease), 0f);
 
         //make a jump check
         Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);

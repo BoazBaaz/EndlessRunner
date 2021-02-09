@@ -768,6 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementInput: 0
+  m_VelocityDecrease: 5
   m_MovementForce: 10
   m_JumpForce: 8
   jumpCheckA: {fileID: 356314258}
