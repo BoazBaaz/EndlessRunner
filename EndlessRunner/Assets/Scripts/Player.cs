@@ -25,13 +25,14 @@ public class Player : MonoBehaviour
     {
         m_MovementInput = Input.GetAxisRaw("Horizontal");
 
-        if (m_MovementInput < 0 && rb2D.velocity.x > 0)
-            rb2D.velocity += -rb2D.velocity;
-        else if (m_MovementInput > 0 && rb2D.velocity.x < 0)
-            rb2D.velocity += -rb2D.velocity;
+        //decrease the velocity if you are going the other way.
+        if (m_MovementInput < 0 && rb2D.velocity.x > 0 || m_MovementInput > 0 && rb2D.velocity.x < 0)
+            rb2D.velocity += -rb2D.velocity / 2;
 
+        //make a jump check
         Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);
 
+        //add force upward * m_jumpforce, if groundcheck != null and is the ground
         if (Input.GetButtonDown("Jump") && groundCheck != null)
             if (groundCheck.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 rb2D.AddForce(Vector3.up * m_JumpForce, ForceMode2D.Impulse);
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        //move the player on the x axis
         rb2D.AddForce(Vector2.right * m_MovementInput * m_MovementForce, ForceMode2D.Force);
     }
 
