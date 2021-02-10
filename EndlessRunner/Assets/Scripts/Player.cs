@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
     [Header("Movement")]
@@ -17,10 +18,12 @@ public class Player : MonoBehaviour
 
     //private
     private Rigidbody2D rb2D; //the 2D rigidbody
+    private Health health; //the player health script
 
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
     }
 
     void Update()
@@ -39,11 +42,9 @@ public class Player : MonoBehaviour
             if (groundCheck.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 rb2D.AddForce(Vector3.up * m_JumpForce, ForceMode2D.Impulse);
 
-        // When player is below playfield (out of camera view (-7.0f)), the death function gets called.
-        if (transform.position.y <= -7.0f)
-        {
-            GameManager.instance.ShowDeathScreen();
-        }
+        // When player is below or above playfield (out of camera view (-5.5f & 5.5f)), the death function gets called.
+        if (transform.position.y <= -5.5f || transform.position.y >= 5.5f)
+            health.ModifyHealth(-health.healthPoints);
     }
 
     void FixedUpdate()

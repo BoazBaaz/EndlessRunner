@@ -8,7 +8,7 @@ public class Health : MonoBehaviour, IDamageble
     public int m_StartingHealth = 1; //starting health of the object
 
     //private
-    public int healthPoints { get; private set; } //the objects curretn health
+    public int healthPoints { get; private set; } //the objects current health
     public bool isAlive { get; private set; } //the alive state of the object
 
     private void Start()
@@ -29,7 +29,10 @@ public class Health : MonoBehaviour, IDamageble
         {
             isAlive = false;
 
-            //TODO: show death screen
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+                GameManager.instance.ShowDeathScreen();
+
+            Destroy(gameObject);
         }
     }
 }

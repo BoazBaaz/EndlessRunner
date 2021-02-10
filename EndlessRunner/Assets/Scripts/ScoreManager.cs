@@ -23,7 +23,7 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         // Stops coroutine when player died.
-        if (GameManager.instance.isDead)
+        if (GameManager.instance.gameOver)
         {
             StopCoroutine("AddScore");
         }

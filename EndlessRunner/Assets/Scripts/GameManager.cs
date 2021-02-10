@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI EndScoreTxt;
 
-    public bool isDead = false;
+    public bool gameOver = false;
 
     private int endScore;
 
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         endScore = ScoreManager.instance.scoreAmount;
         DeathCanvas.SetActive(true); // Shows the death canvas.
-        isDead = true;
+        gameOver = true;
         EndScoreTxt.text = string.Format("Your Score: {0}", endScore);
     }
 }
