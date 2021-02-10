@@ -54,4 +54,12 @@ public class PlatformManager : MonoBehaviour
             yield return new WaitForSeconds(m_SpawnDelay);
         }
     }
+
+
+    private struct PlatformBounds 
+    {
+        Vector2 leftBound;
+        Vector2 rightBound;
+    }
+
 }
