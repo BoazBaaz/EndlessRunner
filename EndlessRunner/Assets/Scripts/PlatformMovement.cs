@@ -24,7 +24,7 @@ public class PlatformMovement : MonoBehaviour
     {
         // Makes the platform Destroy itself when above given index (out of camera view).
 
-        if (transform.position.y >= 5.5f)
+        if (transform.position.y >= 7f)
         {
             Destroy(gameObject);
         }
