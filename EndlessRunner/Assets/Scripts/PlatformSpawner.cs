@@ -18,12 +18,20 @@ public class PlatformSpawner : MonoBehaviour
         StartCoroutine("SpawnPlatforms");
     }
 
+    private void Update()
+    {
+        if (GameManager.instance.isDead)
+        {
+            StopCoroutine("SpawnPlatforms");
+        }
+    }
+
     IEnumerator SpawnPlatforms()
     {
         // Coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given pos.
-
         while (true)
         {
+
             for (int i = 0; i < 2; i++)
             {
                 platformX = Random.Range(-8.88f, 8.88f);
@@ -31,5 +39,6 @@ public class PlatformSpawner : MonoBehaviour
             }
             yield return new WaitForSeconds(2);
         }
+
     }
 }

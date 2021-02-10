@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public GameObject DeathCanvas;
+    public bool isDead = false;
 
     private void Awake()
     {
@@ -17,5 +18,6 @@ public class GameManager : MonoBehaviour
     public void ShowDeathScreen()
     {
         DeathCanvas.SetActive(true);
+        isDead = true;
     }
 }
