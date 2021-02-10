@@ -7,7 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        StartGameAnim.instance.StartAnim();
     }
 
     public void RestartGame()
