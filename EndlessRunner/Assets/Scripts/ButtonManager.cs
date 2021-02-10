@@ -10,6 +10,11 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void QuitGame()
     {
         Application.Quit();

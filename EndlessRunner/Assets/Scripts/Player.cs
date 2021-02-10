@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
             if (groundCheck.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 rb2D.AddForce(Vector3.up * m_JumpForce, ForceMode2D.Impulse);
 
+        // When player is below playfield (out of camera view (-7.0f)), the death function gets called.
         if (transform.position.y <= -7.0f)
         {
             GameManager.instance.ShowDeathScreen();

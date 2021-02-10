@@ -5,15 +5,28 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    public static ScoreManager instance;
+
     public GameObject Score;
     public TextMeshProUGUI ScoreTxt;
-    public float scoreAmount = 0f;
+    public int scoreAmount = 0;
 
-    private void Start()
+    private void Awake()
     {
+        instance = this;
+
         // Sets the given variable to the given string plus variable, and starts the coroutine.
         ScoreTxt.text = string.Format("Score: {0}", scoreAmount);
         StartCoroutine("AddScore");
+    }
+
+    private void Update()
+    {
+        // Stops coroutine when player died.
+        if (GameManager.instance.isDead)
+        {
+            StopCoroutine("AddScore");
+        }
     }
 
     IEnumerator AddScore()

@@ -20,6 +20,7 @@ public class PlatformSpawner : MonoBehaviour
 
     private void Update()
     {
+        // Stops coroutine when player died.
         if (GameManager.instance.isDead)
         {
             StopCoroutine("SpawnPlatforms");
@@ -31,7 +32,6 @@ public class PlatformSpawner : MonoBehaviour
         // Coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given pos.
         while (true)
         {
-
             for (int i = 0; i < 2; i++)
             {
                 platformX = Random.Range(-8.88f, 8.88f);
@@ -39,6 +39,5 @@ public class PlatformSpawner : MonoBehaviour
             }
             yield return new WaitForSeconds(2);
         }
-
     }
 }
