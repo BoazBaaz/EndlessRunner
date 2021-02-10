@@ -40,6 +40,8 @@ public class PlatformManager : MonoBehaviour
             //get a random amout of platforms to spawn
             int spawnAmount = Random.Range(1, m_MaxPlatforms + 1);
 
+            //PlatformBounds bounds = new PlatformBounds(Vector2.zero, Vector2.zero);
+
             for (int i = 0; i < spawnAmount; i++)
             {
                 //get a random betwean 0 and the m_platfroms.length - 1
@@ -51,13 +53,20 @@ public class PlatformManager : MonoBehaviour
                 //spawn a random platform
                 Instantiate(m_Platforms[platformType], new Vector2(platformX, m_PlatformY), Quaternion.identity);
             }
+
+
             yield return new WaitForSeconds(m_SpawnDelay);
         }
     }
 
-
     private struct PlatformBounds 
     {
+        public PlatformBounds(Vector2 _left, Vector2 _right)
+        {
+            leftBound = _left;
+            rightBound = _right;
+        }
+
         Vector2 leftBound;
         Vector2 rightBound;
     }
