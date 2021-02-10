@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
-
-        UIM = UIManager.instance;
     }
 
     [Header("GameInfo")]
@@ -22,29 +20,24 @@ public class GameManager : MonoBehaviour
     public int m_CurrentScore = 0;
     public int m_EndScore = 0;
 
-
-    [Header("Coroutines")]
-    public Coroutine m_PlatformCoroutine;
-    public Coroutine m_ScoreCoroutine;
-
     //private
     UIManager UIM;
 
     private void Start()
     {
+        //instance of the uimanager
+        UIM = UIManager.instance;
+
         UIM.m_DeathCanvas.SetActive(false); //disable the death canvas
         UIM.m_ScoreCanvas.SetActive(true); //enable the score canvas
     }
 
     public void ShowDeathScreen()
     {
-        //stop spawning platforms
-        StopCoroutine(m_PlatformCoroutine); 
-        StopCoroutine(m_ScoreCoroutine);
-
         //set death
-        UIM.m_DeathCanvas.SetActive(true); // Shows the death canvas.
         m_GameOver = true; //set gameover to true.
+        UIM.m_DeathCanvas.SetActive(true); //shows the death canvas.
+        UIM.m_ScoreCanvas.SetActive(false); //enable the score canvas
 
         //set the current score
         m_EndScore = m_CurrentScore; //set the endscore to the current score.

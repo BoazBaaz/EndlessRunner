@@ -13,8 +13,6 @@ public class UIManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
-
-        GM = GameManager.instance;
     }
 
     [Header("Canvas Objects")]
@@ -30,8 +28,11 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        //instance of the gamemanager
+        GM = GameManager.instance;
+
         //start the coroutine.
-        GM.m_ScoreCoroutine = StartCoroutine(AddScore());
+        StartCoroutine(AddScore());
     }
 
     IEnumerator AddScore()

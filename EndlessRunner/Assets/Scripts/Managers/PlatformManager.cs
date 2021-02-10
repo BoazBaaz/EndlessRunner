@@ -12,8 +12,6 @@ public class PlatformManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
-
-        GM = GameManager.instance;
     }
 
     [Header("SpawnInfo")]
@@ -27,8 +25,11 @@ public class PlatformManager : MonoBehaviour
 
     private void Start()
     {
+        //instance of the gamemanager
+        GM = GameManager.instance;
+
         //start coroutine.
-        GM.m_PlatformCoroutine = StartCoroutine(SpawnPlatforms());
+        StartCoroutine(SpawnPlatforms());
     }
 
     IEnumerator SpawnPlatforms()

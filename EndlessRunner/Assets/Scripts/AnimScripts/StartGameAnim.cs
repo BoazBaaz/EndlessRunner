@@ -41,7 +41,7 @@ public class StartGameAnim : MonoBehaviour
         StartButton.SetActive(false);
         QuitButton.SetActive(false);
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(1);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         StopCoroutine("WaitToStart");
     }
 
