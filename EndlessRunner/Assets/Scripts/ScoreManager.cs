@@ -5,13 +5,13 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    public GameObject Score;
     public TextMeshProUGUI ScoreTxt;
     public float scoreAmount = 0f;
 
     private void Start()
     {
         // Sets the given variable to the given string plus variable, and starts the coroutine.
-
         ScoreTxt.text = string.Format("Score: {0}", scoreAmount);
         StartCoroutine("AddScore");
     }

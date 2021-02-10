@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump") && groundCheck != null)
             if (groundCheck.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 rb2D.AddForce(Vector3.up * m_JumpForce, ForceMode2D.Impulse);
+
+        if (transform.position.y <= -7.0f)
+        {
+            GameManager.instance.ShowDeathScreen();
+        }
     }
 
     void FixedUpdate()
