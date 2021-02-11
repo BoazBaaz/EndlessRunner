@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
         UIM.m_DeathCanvas.SetActive(false); //disable the death canvas
         UIM.m_ScoreCanvas.SetActive(true); //enable the score canvas
 
-        FadeInPanel.SetActive(true);
-        FadeInAnim.instance.FadeIn();
+        FadeInPanel.SetActive(true); //enables the fade-in canvas
+        FadeInAnim.instance.FadeIn(); //calls the fade-in function from the FadeInAnim script
     }
 
     public void ShowDeathScreen()

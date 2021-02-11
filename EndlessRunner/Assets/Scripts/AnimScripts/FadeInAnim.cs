@@ -18,6 +18,6 @@ public class FadeInAnim : MonoBehaviour
 
     public void FadeIn()
     {
-        animator.SetBool("isStarting", true);
+        animator.SetBool("isStarting", true); //when function is called, the bool of the selected animator gets set to true
     }
 }
