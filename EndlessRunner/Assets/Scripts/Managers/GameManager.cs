@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public int m_CurrentScore = 0;
     public int m_EndScore = 0;
 
+    [Header("GameObjects")]
+    public GameObject FadeInPanel;
+
     //private
     UIManager UIM;
 
@@ -30,6 +33,9 @@ public class GameManager : MonoBehaviour
 
         UIM.m_DeathCanvas.SetActive(false); //disable the death canvas
         UIM.m_ScoreCanvas.SetActive(true); //enable the score canvas
+
+        FadeInPanel.SetActive(true);
+        FadeInAnim.instance.FadeIn();
     }
 
     public void ShowDeathScreen()
