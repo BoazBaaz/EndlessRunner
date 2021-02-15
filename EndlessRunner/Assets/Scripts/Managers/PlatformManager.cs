@@ -18,7 +18,7 @@ public class PlatformManager : MonoBehaviour
     public GameObject[] m_Platforms; //the array of the platforms to use
     public float m_SpawnDelay = 2f; //spawn delay is seconds
     public int m_MaxPlatforms = 2; //max platforms to spawn
-    public float m_PlatformY = -7.0f; //the Y the platforms spawn at
+    public float m_EnviromentSpeed = 4f; //the speed used for the platforms and background
 
     //private
     private GameManager GM;
@@ -49,10 +49,10 @@ public class PlatformManager : MonoBehaviour
                 int platformType = Random.Range(0, m_Platforms.Length);
 
                 //get a random between the camera borders
-                float platformX = Random.Range(-8f, 8f);
+                float platformX = Random.Range(-GM.m_XBounds, GM.m_XBounds);
 
                 //spawn a random platform
-                GameObject platform = Instantiate(m_Platforms[platformType], new Vector2(platformX, m_PlatformY), Quaternion.identity);
+                GameObject platform = Instantiate(m_Platforms[platformType], new Vector2(platformX, -GM.m_YBounds), Quaternion.identity);
                 Collider2D platformCollider = platform.GetComponent<Collider2D>();
 
                 //add the plaform to the boundsArray
@@ -64,11 +64,8 @@ public class PlatformManager : MonoBehaviour
             //delete one of the platforms if its bounds are overlaping
             foreach (var platform in boundsArray)
             {
-                if (platform.leftBound < 8)
-                {
+                if (platform.leftBound < -GM.m_XBounds)
                     Destroy(platform.platform);
-
-                }
             }
 
             yield return new WaitForSeconds(m_SpawnDelay);

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlatformMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5.0f;
-
     private void Update()
     {
         MoveObject();
@@ -17,14 +15,14 @@ public class PlatformMovement : MonoBehaviour
     {
         // Makes the platform move up multiplied by the given speed and Time.deltaTime to sync it.
 
-        transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
+        transform.Translate(Vector2.up * PlatformManager.instance.m_EnviromentSpeed * Time.deltaTime);
     }
 
     public void CheckPosition()
     {
         // Makes the platform Destroy itself when above given index (out of camera view).
 
-        if (transform.position.y >= 7f)
+        if (transform.position.y >= GameManager.instance.m_YBounds)
         {
             Destroy(gameObject);
         }
