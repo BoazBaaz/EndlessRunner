@@ -40,7 +40,8 @@ public class PlatformManager : MonoBehaviour
             //get a random amout of platforms to spawn
             int spawnAmount = Random.Range(1, m_MaxPlatforms + 1);
 
-            //PlatformBounds bounds = new PlatformBounds(Vector2.zero, Vector2.zero);
+            //make an array for all the bounds od the spawned platforms
+            PlatformBounds[] boundsArray = new PlatformBounds[spawnAmount];
 
             for (int i = 0; i < spawnAmount; i++)
             {
@@ -48,27 +49,44 @@ public class PlatformManager : MonoBehaviour
                 int platformType = Random.Range(0, m_Platforms.Length);
 
                 //get a random between the camera borders
-                float platformX = Random.Range(-8.88f, 8.88f);
+                float platformX = Random.Range(-8f, 8f);
 
                 //spawn a random platform
-                Instantiate(m_Platforms[platformType], new Vector2(platformX, m_PlatformY), Quaternion.identity);
+                GameObject platform = Instantiate(m_Platforms[platformType], new Vector2(platformX, m_PlatformY), Quaternion.identity);
+                Collider2D platformCollider = platform.GetComponent<Collider2D>();
+
+                //add the plaform to the boundsArray
+                boundsArray[i] = new PlatformBounds(platform.gameObject,
+                                                    platform.transform.position.x - platformCollider.bounds.extents.x,
+                                                    platform.transform.position.x + platformCollider.bounds.extents.x);
             }
 
+            //delete one of the platforms if its bounds are overlaping
+            foreach (var platform in boundsArray)
+            {
+                if (platform.leftBound < 8)
+                {
+                    Destroy(platform.platform);
+
+                }
+            }
 
             yield return new WaitForSeconds(m_SpawnDelay);
         }
     }
 
-    private struct PlatformBounds 
+    private struct PlatformBounds
     {
-        public PlatformBounds(Vector2 _left, Vector2 _right)
+        public PlatformBounds(GameObject _platform, float _left, float _right)
         {
+            platform = _platform;
             leftBound = _left;
             rightBound = _right;
         }
 
-        Vector2 leftBound;
-        Vector2 rightBound;
+        public GameObject platform;
+        public float leftBound;
+        public float rightBound;
     }
 
 }
