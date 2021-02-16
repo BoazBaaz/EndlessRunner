@@ -85,6 +85,9 @@ MonoBehaviour:
   - {fileID: 2031079445854345518, guid: 1edbf968c23e8c74ea1a72ea21762f8f, type: 3}
   - {fileID: 2031079445854345518, guid: bb44b21bf70c095459c5e05110fde58a, type: 3}
   - {fileID: 2031079445854345518, guid: f6d46a91665669d4dbd2b44611d0412d, type: 3}
+  m_SpawnObstacles:
+    serializedVersion: 2
+    m_Bits: 136
   m_SpawnDelay: 1
   m_MaxPlatforms: 5
   m_EnviromentSpeed: 4

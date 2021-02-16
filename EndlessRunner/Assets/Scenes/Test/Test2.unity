@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 626388631}
   - component: {fileID: 626388633}
   - component: {fileID: 626388632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,34 +612,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -650,6 +622,10 @@ PrefabInstance:
     - target: {fileID: 8989169295121274002, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989169295121274005, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8989169295121274007, guid: 4d35571d0768d00499d135aa4fb37387, type: 3}
       propertyPath: m_Name
@@ -1184,7 +1160,7 @@ GameObject:
   - component: {fileID: 1330475557}
   - component: {fileID: 1330475559}
   - component: {fileID: 1330475558}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,6 +16,7 @@ public class PlatformManager : MonoBehaviour
 
     [Header("SpawnInfo")]
     public GameObject[] m_Platforms; //the array of the platforms to use
+    public LayerMask m_SpawnObstacles; //the layers of objects that disrupt the spawning prosses.
     public float m_SpawnDelay = 2f; //spawn delay is seconds
     public int m_MaxPlatforms = 2; //max platforms to spawn
     public float m_EnviromentSpeed = 4f; //the speed used for the platforms and background
@@ -34,69 +35,63 @@ public class PlatformManager : MonoBehaviour
 
     IEnumerator SpawnPlatforms()
     {
-        // Coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given pos.
+        /*List<string> names = new List<string>();
+        for (int i = 0; i < 31; i++)
+        {
+            string layerName = LayerMask.LayerToName(i);
+            //if (layerName == )
+
+            string l = LayerMask.LayerToName(m_SpawnObstacles);
+
+
+        }*/
+
+        //coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given position.
         while (!GM.m_GameOver)
         {
-            //get a random amout of platforms to spawn
+            //get a random amout of platforms to spawn.
             int spawnAmount = Random.Range(1, m_MaxPlatforms + 1);
-
-            //make an array for all the bounds od the spawned platforms
-            PlatformBounds[] boundsArray = new PlatformBounds[spawnAmount];
 
             for (int i = 0; i < spawnAmount; i++)
             {
-                //get a random betwean 0 and the m_platfroms.length - 1
-                int platformType = Random.Range(0, m_Platforms.Length);
+                int platformType = Random.Range(0, m_Platforms.Length); //get a random betwean 0 and the m_platfroms.length - 1
+                float platformX = Random.Range(-GM.m_XBounds, GM.m_XBounds); //get a random between the camera borders
+                Collider2D platformCollider = m_Platforms[platformType].GetComponent<Collider2D>(); //the collider of the platform about to spawn
 
-                //get a random between the camera borders
-                float platformX = Random.Range(-GM.m_XBounds, GM.m_XBounds);
-
-                //spawn a random platform
-                GameObject platform = Instantiate(m_Platforms[platformType], new Vector2(platformX, -GM.m_YBounds), Quaternion.identity);
-                Collider2D platformCollider = platform.GetComponent<Collider2D>();
-
-                //add the plaform to the boundsArray
-                boundsArray[i] = new PlatformBounds(platform.gameObject,
-                                                    platform.transform.position.x - platformCollider.bounds.extents.x,
-                                                    platform.transform.position.x + platformCollider.bounds.extents.x);
+                //spawn a random platform, if possible.
+                if (CalculateSpawnable(platformX, -GM.m_YBounds, platformCollider))
+                    Instantiate(m_Platforms[platformType], new Vector2(platformX, -GM.m_YBounds), Quaternion.identity);
             }
-
-            PlatformOverlapsCheck(boundsArray);
 
             yield return new WaitForSeconds(m_SpawnDelay);
         }
     }
 
-    private void PlatformOverlapsCheck(PlatformBounds[] _boundsArray)
+    /// <summary>
+    /// Return true if the space is spawnable.
+    /// </summary>
+    /// <param name="_x">The X spawn position in world space.</param>
+    /// <param name="_y">The Y spawn position in world space.</param>
+    /// <param name="_col">The collider of the object trying to spawn.</param>
+    /// <returns></returns>
+    private bool CalculateSpawnable(float _x, float _y, Collider2D _col)
     {
-        //delete one of the platforms if its bounds are overlaping
-        for (int i = 0; i < _boundsArray.Length; i++)
-        {
-            if (_boundsArray[i].leftBound < -GM.m_XBounds || _boundsArray[i].rightBound > GM.m_XBounds)
-                Destroy(_boundsArray[i].platform);
+        //get all the colliders in the spawn space.
+         Collider2D[] obstacles = Physics2D.OverlapAreaAll(new Vector2(_x - _col.bounds.extents.x, _y + _col.bounds.extents.y),
+                                                           new Vector2(_x + _col.bounds.extents.x, _y - _col.bounds.extents.y));
 
-            if (i != 0)
-            {
-                if (_boundsArray[i].leftBound > _boundsArray[i - 1].leftBound && _boundsArray[i].leftBound < _boundsArray[i - 1].rightBound)
-                    Destroy(_boundsArray[i].platform);
-                if (_boundsArray[i].rightBound < _boundsArray[i - 1].rightBound && _boundsArray[i].rightBound > _boundsArray[i - 1].leftBound)
-                    Destroy(_boundsArray[i].platform);
-            }
-        }
-    }
-
-    private struct PlatformBounds
-    {
-        public PlatformBounds(GameObject _platform, float _left, float _right)
+        //check if the colliders layers are in the m_SpawnObstacle layermask.
+        foreach (var obst in obstacles)
         {
-            platform = _platform;
-            leftBound = _left;
-            rightBound = _right;
+            int LayerToMask = 1 << obst.gameObject.layer;
+            int SpawnObstacleMask = m_SpawnObstacles;
+
+            int layer = LayerToMask & m_SpawnObstacles;
+
+            if (layer != 0)
+                return false;
         }
 
-        public GameObject platform;
-        public float leftBound;
-        public float rightBound;
+        return true;
     }
-
 }
