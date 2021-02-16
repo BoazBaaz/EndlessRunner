@@ -61,14 +61,27 @@ public class PlatformManager : MonoBehaviour
                                                     platform.transform.position.x + platformCollider.bounds.extents.x);
             }
 
-            //delete one of the platforms if its bounds are overlaping
-            foreach (var platform in boundsArray)
-            {
-                if (platform.leftBound < -GM.m_XBounds)
-                    Destroy(platform.platform);
-            }
+            PlatformOverlapsCheck(boundsArray);
 
             yield return new WaitForSeconds(m_SpawnDelay);
+        }
+    }
+
+    private void PlatformOverlapsCheck(PlatformBounds[] _boundsArray)
+    {
+        //delete one of the platforms if its bounds are overlaping
+        for (int i = 0; i < _boundsArray.Length; i++)
+        {
+            if (_boundsArray[i].leftBound < -GM.m_XBounds || _boundsArray[i].rightBound > GM.m_XBounds)
+                Destroy(_boundsArray[i].platform);
+
+            if (i != 0)
+            {
+                if (_boundsArray[i].leftBound > _boundsArray[i - 1].leftBound && _boundsArray[i].leftBound < _boundsArray[i - 1].rightBound)
+                    Destroy(_boundsArray[i].platform);
+                if (_boundsArray[i].rightBound < _boundsArray[i - 1].rightBound && _boundsArray[i].rightBound > _boundsArray[i - 1].leftBound)
+                    Destroy(_boundsArray[i].platform);
+            }
         }
     }
 
