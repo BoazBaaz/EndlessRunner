@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EndScore: 0
   m_YBounds: 7
   m_XBounds: 8
+  m_BackgroundDespawnY: 16
+  m_BackgroundSpawnY: -16
   m_FadeInPanel: {fileID: 0}
 --- !u!114 &4123472542315105027
 MonoBehaviour:

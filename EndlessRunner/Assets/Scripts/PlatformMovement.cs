@@ -1,30 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformMovement : MonoBehaviour
+public class PlatformMovement : EnviromentMovement
 {
     private void Update()
     {
-        MoveObject();
-
-        CheckPosition();
+        Movement(PlatformManager.instance.m_EnviromentSpeed);
+        CheckForDestroy(GameManager.instance.m_YBounds);
     }
 
-    public void MoveObject()
+    public override void Movement(float _speed)
     {
-        // Makes the platform move up multiplied by the given speed and Time.deltaTime to sync it.
-
-        transform.Translate(Vector2.up * PlatformManager.instance.m_EnviromentSpeed * Time.deltaTime);
+        base.Movement(_speed);
     }
 
-    public void CheckPosition()
+    public override void CheckForDestroy(float _boundsY)
     {
-        // Makes the platform Destroy itself when above given index (out of camera view).
-
-        if (transform.position.y >= GameManager.instance.m_YBounds)
-        {
-            Destroy(gameObject);
-        }
+        base.CheckForDestroy(_boundsY);
     }
 }

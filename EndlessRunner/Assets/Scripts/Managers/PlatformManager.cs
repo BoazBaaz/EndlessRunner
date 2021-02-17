@@ -35,17 +35,6 @@ public class PlatformManager : MonoBehaviour
 
     IEnumerator SpawnPlatforms()
     {
-        /*List<string> names = new List<string>();
-        for (int i = 0; i < 31; i++)
-        {
-            string layerName = LayerMask.LayerToName(i);
-            //if (layerName == )
-
-            string l = LayerMask.LayerToName(m_SpawnObstacles);
-
-
-        }*/
-
         //coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given position.
         while (!GM.m_GameOver)
         {

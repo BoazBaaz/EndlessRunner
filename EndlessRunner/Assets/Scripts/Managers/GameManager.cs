@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public float m_YBounds = 7f;
     public float m_XBounds = 8f;
 
+    public float m_BackgroundDespawnY;
+    public float m_BackgroundSpawnY;
+
     [Header("GameObjects")]
     public GameObject m_FadeInPanel;
 
