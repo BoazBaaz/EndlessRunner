@@ -45,10 +45,10 @@ public class PlatformManager : MonoBehaviour
             {
                 int platformType = Random.Range(0, m_Platforms.Length); //get a random betwean 0 and the m_platfroms.length - 1
                 float platformX = Random.Range(-GM.m_XBounds, GM.m_XBounds); //get a random between the camera borders
-                Collider2D platformCollider = m_Platforms[platformType].GetComponent<Collider2D>(); //the collider of the platform about to spawn
+                Vector2 platformSize = m_Platforms[platformType].GetComponent<BoxCollider2D>().size; //the size of the platform about to spawn
 
                 //spawn a random platform, if possible.
-                if (CalculateSpawnable(platformX, -GM.m_YBounds, platformCollider))
+                if (CalculateSpawnable(platformX, -GM.m_YBounds, platformSize))
                     Instantiate(m_Platforms[platformType], new Vector2(platformX, -GM.m_YBounds), Quaternion.identity);
             }
 
@@ -61,13 +61,13 @@ public class PlatformManager : MonoBehaviour
     /// </summary>
     /// <param name="_x">The X spawn position in world space.</param>
     /// <param name="_y">The Y spawn position in world space.</param>
-    /// <param name="_col">The collider of the object trying to spawn.</param>
+    /// <param name="_bounds">The collider of the object trying to spawn.</param>
     /// <returns></returns>
-    private bool CalculateSpawnable(float _x, float _y, Collider2D _col)
+    private bool CalculateSpawnable(float _x, float _y, Vector2 _bounds)
     {
         //get all the colliders in the spawn space.
-         Collider2D[] obstacles = Physics2D.OverlapAreaAll(new Vector2(_x - _col.bounds.extents.x, _y + _col.bounds.extents.y),
-                                                           new Vector2(_x + _col.bounds.extents.x, _y - _col.bounds.extents.y));
+         Collider2D[] obstacles = Physics2D.OverlapAreaAll(new Vector2(_x - _bounds.x / 2, _y + _bounds.y / 2),
+                                                           new Vector2(_x + _bounds.x / 2, _y - _bounds.y / 2));
 
         //check if the colliders layers are in the m_SpawnObstacle layermask.
         foreach (var obst in obstacles)
