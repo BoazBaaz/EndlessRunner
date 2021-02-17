@@ -43,13 +43,13 @@ public class PlatformManager : MonoBehaviour
 
             for (int i = 0; i < spawnAmount; i++)
             {
-                int platformType = Random.Range(0, m_Platforms.Length); //get a random betwean 0 and the m_platfroms.length - 1
-                float platformX = Random.Range(-GM.m_XBounds, GM.m_XBounds); //get a random between the camera borders
-                Vector2 platformSize = m_Platforms[platformType].GetComponent<BoxCollider2D>().size; //the size of the platform about to spawn
+                int pltType = Random.Range(0, m_Platforms.Length); //get a random betwean 0 and the m_platfroms.length - 1
+                float pltX = Random.Range(-GM.m_XBounds, GM.m_XBounds); //get a random between the camera borders
+                Vector2 pltSize = m_Platforms[pltType].GetComponent<BoxCollider2D>().size; //the size of the platform about to spawn
 
                 //spawn a random platform, if possible.
-                if (CalculateSpawnable(platformX, -GM.m_YBounds, platformSize))
-                    Instantiate(m_Platforms[platformType], new Vector2(platformX, -GM.m_YBounds), Quaternion.identity);
+                if (CalculateSpawnable(pltX, -GM.m_YBounds, pltSize))
+                    Instantiate(m_Platforms[pltType], new Vector2(pltX, -GM.m_YBounds), Quaternion.identity);
             }
 
             yield return new WaitForSeconds(m_SpawnDelay);
@@ -66,18 +66,19 @@ public class PlatformManager : MonoBehaviour
     private bool CalculateSpawnable(float _x, float _y, Vector2 _bounds)
     {
         //get all the colliders in the spawn space.
-         Collider2D[] obstacles = Physics2D.OverlapAreaAll(new Vector2(_x - _bounds.x / 2, _y + _bounds.y / 2),
-                                                           new Vector2(_x + _bounds.x / 2, _y - _bounds.y / 2));
+        Collider2D[] obstacles = Physics2D.OverlapAreaAll(new Vector2(_x - _bounds.x / 2, _y + _bounds.y / 2),
+                                                          new Vector2(_x + _bounds.x / 2, _y - _bounds.y / 2));
 
         //check if the colliders layers are in the m_SpawnObstacle layermask.
         foreach (var obst in obstacles)
         {
-            int LayerToMask = 1 << obst.gameObject.layer;
-            int SpawnObstacleMask = m_SpawnObstacles;
-
-            int layer = LayerToMask & m_SpawnObstacles;
-
-            if (layer != 0)
+            int obstLayer = 1 << obst.gameObject.layer; // (1 << 3) = 8
+            bool hasLayer = (m_SpawnObstacles & obstLayer) == obstLayer; //136 & 8 == 8 = true.
+            //kijkt of hij het containd, vergelijkmaar met.
+                //10001000 &(contains) 00001000 == 00001000 = true. (layer 3 (bitlayer 8))
+                //10001000 &(contains) 10000000 == 10000000 = true. (layer 7 (bitlayer 128))
+                
+            if (hasLayer)
                 return false;
         }
 

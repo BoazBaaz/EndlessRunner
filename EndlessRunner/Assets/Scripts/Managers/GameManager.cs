@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
     public float m_BackgroundDespawnY;
     public float m_BackgroundSpawnY;
 
-    [Header("GameObjects")]
-    public GameObject m_FadeInPanel;
+    //[Header("GameObjects")]
+    //public GameObject m_FadeInPanel;
 
     //private
     UIManager UIM;
@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour
         UIM.m_DeathCanvas.SetActive(false); //disable the death canvas
         UIM.m_ScoreCanvas.SetActive(true); //enable the score canvas
 
-        m_FadeInPanel.SetActive(true); //enables the fade-in canvas
-        FadeInAnim.instance.FadeIn(); //calls the fade-in function from the FadeInAnim script
+        //m_FadeInPanel.SetActive(true); //enables the fade-in canvas
+        //FadeInAnim.instance.FadeIn(); //calls the fade-in function from the FadeInAnim script
     }
 
     public void ShowDeathScreen()
