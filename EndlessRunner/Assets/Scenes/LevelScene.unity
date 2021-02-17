@@ -1175,6 +1175,10 @@ PrefabInstance:
       propertyPath: FadeInPanel
       value: 
       objectReference: {fileID: 610368713}
+    - target: {fileID: 4123472542315105029, guid: c907fb66c3bd1f34eab8189807b8d860, type: 3}
+      propertyPath: m_FadeInPanel
+      value: 
+      objectReference: {fileID: 610368713}
     - target: {fileID: 4123472542315105031, guid: c907fb66c3bd1f34eab8189807b8d860, type: 3}
       propertyPath: m_Name
       value: GameManager
