@@ -37,6 +37,10 @@ public class StartGameAnim : MonoBehaviour
 
     IEnumerator WaitToStart()
     {
+        ///<summary>
+        /// Waits a seconds and turns the buttons off, then waits 2 seconds to load the given scene index.
+        ///</summary>
+
         yield return new WaitForSeconds(1);
         StartButton.SetActive(false);
         QuitButton.SetActive(false);
