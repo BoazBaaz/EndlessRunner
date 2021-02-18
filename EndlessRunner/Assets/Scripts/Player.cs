@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
@@ -19,11 +19,13 @@ public class Player : MonoBehaviour
     //private
     private Rigidbody2D rb2D; //the 2D rigidbody
     private Health health; //the player health script
+    private SpriteRenderer spRender; //the sprite renderer of the player
 
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         health = GetComponent<Health>();
+        spRender = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -34,16 +36,21 @@ public class Player : MonoBehaviour
         if (m_MovementInput < 0 && rb2D.velocity.x > 0 || m_MovementInput > 0 && rb2D.velocity.x < 0)
             rb2D.velocity += new Vector2(-(rb2D.velocity.x / m_VelocityDecrease), 0f);
 
-        //make a jump check
-        Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);
+        if (m_MovementInput > 0)
+            spRender.flipX = false;
+        else if (m_MovementInput < 0)
+            spRender.flipX = true;
+
+            //make a jump check
+            Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);
 
         //add force upward * m_jumpforce, if groundcheck != null and is the ground
         if (Input.GetButtonDown("Jump") && groundCheck != null)
             if (groundCheck.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 rb2D.AddForce(Vector3.up * m_JumpForce, ForceMode2D.Impulse);
 
-        // When player is below or above playfield (out of camera view (-5.5f & 5.5f)), the death function gets called.
-        if (transform.position.y <= -5.5f || transform.position.y >= 5.5f)
+        // When player is below or above playfield, the death function gets called.
+        if (transform.position.y <= -GameManager.instance.m_YBounds || transform.position.y >= GameManager.instance.m_YBounds)
             health.ModifyHealth(-health.healthPoints);
     }
 
