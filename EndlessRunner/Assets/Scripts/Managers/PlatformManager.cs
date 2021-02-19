@@ -33,6 +33,10 @@ public class PlatformManager : MonoBehaviour
         StartCoroutine(SpawnPlatforms());
     }
 
+    /// <summary>
+    /// The coroutine to spawn platforms.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SpawnPlatforms()
     {
         //coroutine gets repeated every 2 seconds using a While-statement, and cals the for-loop 2 times, which spawns in the given Object twice at given position.
@@ -72,12 +76,10 @@ public class PlatformManager : MonoBehaviour
         //check if the colliders layers are in the m_SpawnObstacle layermask.
         foreach (var obst in obstacles)
         {
-            int obstLayer = 1 << obst.gameObject.layer; // (1 << 3) = 8
-            bool hasLayer = (m_SpawnObstacles & obstLayer) == obstLayer; //136 & 8 == 8 = true.
-            //kijkt of hij het containd, vergelijkmaar met.
-                //10001000 &(contains) 00001000 == 00001000 = true. (layer 3 (bitlayer 8))
-                //10001000 &(contains) 10000000 == 10000000 = true. (layer 7 (bitlayer 128))
-                
+            int obstLayer = 1 << obst.gameObject.layer; // bitshift the obstacles layer.
+            bool hasLayer = (m_SpawnObstacles & obstLayer) == obstLayer; //check is the obstacles (bit shifted) layer is in the m_SpawnObstacle LayerMask.
+
+            //return true if the obstacles layer is in the m_SpawnObstacle LayerMask.
             if (hasLayer)
                 return false;
         }

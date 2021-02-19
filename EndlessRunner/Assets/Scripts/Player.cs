@@ -30,19 +30,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //get the raw input on the X axis.
         m_MovementInput = Input.GetAxisRaw("Horizontal");
 
         //decrease the velocity if you are going the other way.
         if (m_MovementInput < 0 && rb2D.velocity.x > 0 || m_MovementInput > 0 && rb2D.velocity.x < 0)
             rb2D.velocity += new Vector2(-(rb2D.velocity.x / m_VelocityDecrease), 0f);
 
+        //flip the player sprite if you go left, and flip the sprite back if you go right.
         if (m_MovementInput > 0)
             spRender.flipX = false;
         else if (m_MovementInput < 0)
             spRender.flipX = true;
 
-            //make a jump check
-            Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);
+        //make a jump check
+        Collider2D groundCheck = Physics2D.OverlapArea(jumpCheckA.position, jumpCheckB.position);
 
         //add force upward * m_jumpforce, if groundcheck != null and is the ground
         if (Input.GetButtonDown("Jump") && groundCheck != null)
@@ -59,5 +61,4 @@ public class Player : MonoBehaviour
         //move the player on the x axis
         rb2D.AddForce(Vector2.right * m_MovementInput * m_MovementForce, ForceMode2D.Force);
     }
-
 }
