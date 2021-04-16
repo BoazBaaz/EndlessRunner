@@ -76,8 +76,10 @@ public class PlatformManager : MonoBehaviour
         //check if the colliders layers are in the m_SpawnObstacle layermask.
         foreach (var obst in obstacles)
         {
-            int obstLayer = 1 << obst.gameObject.layer; // bitshift the obstacles layer.
-            bool hasLayer = (m_SpawnObstacles & obstLayer) == obstLayer; //check is the obstacles (bit shifted) layer is in the m_SpawnObstacle LayerMask.
+            //bitshift the obstacles layer.
+            int obstLayer = 1 << obst.gameObject.layer; 
+            //check is the obstacles (bit shifted) layer is in the m_SpawnObstacle LayerMask.
+            bool hasLayer = (m_SpawnObstacles & obstLayer) == obstLayer; 
 
             //return true if the obstacles layer is in the m_SpawnObstacle LayerMask.
             if (hasLayer)
